@@ -10,13 +10,15 @@
 ![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 ![HCL](https://img.shields.io/badge/HCL-000000?style=for-the-badge&logo=terraform&logoColor=white)
 
+[![Terraform Registry](https://img.shields.io/badge/Terraform%20Registry-LemurDaniel%2Ftemplatefile%2Frandom-844FBA?style=for-the-badge&logo=terraform&logoColor=white)](https://registry.terraform.io/modules/LemurDaniel/templatefile/random/latest)
+
 Render a file through simple `${token}` substitution, then decode it into a native Terraform value.
 
 </div>
 
 ```hcl
 module "template" {
-  source = "LemurDaniel/template/random"
+  source = "LemurDaniel/templatefile/random"
 
   file = "${path.root}/config.yaml"
   parameters = {

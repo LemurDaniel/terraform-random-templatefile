@@ -7,7 +7,7 @@
 # ----------------------------------------------------------------------------
 
 module "template" {
-  source = "../.."
+  source = "LemurDaniel/templatefile/random"
 
   file = "${path.root}/file.tfvars"
   parameters = {
