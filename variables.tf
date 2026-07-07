@@ -1,13 +1,13 @@
 
 
 variable "file" {
-  description = "value"
+  description = "Path to the template file to render. Occurrences of ${PARAM} placeholders are replaced with values from var.parameters. The file extension (yaml/yml, json, tfvars, or other) determines the default decoding format unless var.format overrides it."
   type        = string
   nullable    = false
 }
 
 variable "parameters" {
-  description = "value"
+  description = "Map of parameter names to values used to substitute ${PARAM} placeholders in the template file."
   type        = map(any)
   nullable    = false
 }
