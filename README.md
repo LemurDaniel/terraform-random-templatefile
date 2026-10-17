@@ -56,7 +56,7 @@ replicas:    3
 
 ```hcl
 module "template" {
-  source = "LemurDaniel/template/random"
+  source = "LemurDaniel/templatefile/random"
 
   file = "${path.root}/config.yaml"
   parameters = {
@@ -105,9 +105,14 @@ test: This is a test1
 ```
 
 > [!IMPORTANT]
-> Every `${TOKEN}` found in the file **must** have a matching key in `parameters`, or the module fails to evaluate. There is no "leave as-is" fallback for unmatched tokens.
+> Every `${TOKEN}` found in the file **must** have a matching key in `parameters`, or the module fails to evaluate with an error listing the missing tokens. There is no "leave as-is" fallback for unmatched tokens.
 
 Because substitution happens on the raw file text *before* any decoding, the tokens don't need to sit inside quotes or otherwise be valid syntax for the target format — the placeholder is a plain string search-and-replace.
+
+> [!WARNING]
+> Values are inserted **verbatim, without escaping**. A value containing quotes, `:`, newlines or other syntax of the target format can break decoding — e.g. `"say "hi""` in a quoted YAML or JSON string. Escape such values yourself (or use `jsonencode(value)` for JSON) before passing them in.
+
+Parameter values must be strings, numbers or bools. Lists and maps are rejected by validation, since they cannot be inserted into text.
 
 ### 📄 Format Detection & Decoding
 
@@ -120,7 +125,7 @@ After substitution, the resulting text is decoded according to `format` (explici
 | `.tfvars` | `Tfvars` | `provider::terraform::decode_tfvars()` |
 | anything else | `Text` | returned as a raw string |
 
-`format` can be set explicitly to override the extension-based guess, e.g. to decode a `.txt` file as YAML.
+Extensions are matched case-insensitively (`.YAML` works like `.yaml`). `format` can be set explicitly to override the extension-based guess, e.g. to decode a `.txt` file as YAML.
 
 ---
 
@@ -129,7 +134,7 @@ After substitution, the resulting text is decoded according to `format` (explici
 | Name | Type | Required | Description |
 |---|---|---|---|
 | `file` | `string` | Yes | Path to the file to read (typically `"${path.root}/..."`). |
-| `parameters` | `map(any)` | Yes | Values substituted into `${TOKEN}` placeholders found in the file. |
+| `parameters` | `map(any)` | Yes | Values substituted into `${TOKEN}` placeholders found in the file. Strings, numbers or bools only. |
 | `format` | `string` | No (default `null`, auto-detected) | Overrides format detection. One of `Text`, `Json`, `Yaml`, `Tfvars`. |
 
 ## 📤 Outputs

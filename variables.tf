@@ -10,6 +10,11 @@ variable "parameters" {
   description = "Map of parameter names to values used to substitute placeholders in the template file."
   type        = map(any)
   nullable    = false
+
+  validation {
+    condition     = alltrue([for value in values(var.parameters) : can(tostring(value))])
+    error_message = "All parameter values must be strings, numbers or bools; lists and maps cannot be substituted into the file."
+  }
 }
 
 variable "format" {
