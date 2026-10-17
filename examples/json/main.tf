@@ -3,7 +3,8 @@
 # ----------------------------------------------------------------------------
 
 module "template" {
-  source = "LemurDaniel/templatefile/random"
+  source  = "LemurDaniel/templatefile/random"
+  version = ">= 1.1.0"
 
   file = "${path.root}/file.json"
   parameters = {
