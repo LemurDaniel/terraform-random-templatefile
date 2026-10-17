@@ -1,5 +1,8 @@
 # ----------------------------------------------------------------------------
-# Example: render file.yaml with ${...} substitution and decode it.
+# Example: render an app config from file.yaml.
+#
+# Placeholders are reused inside larger strings (url, host), and numbers and
+# bools are inserted unquoted, so they decode to native number/bool values.
 # ----------------------------------------------------------------------------
 
 module "template" {
@@ -8,12 +11,19 @@ module "template" {
 
   file = "${path.root}/file.yaml"
   parameters = {
-    insertion01 = "This is a test1"
-    insertion02 = "This is a test2"
-    insertion03 = "This is a test3"
+    appName        = "shop"
+    environment    = "prod"
+    maxConnections = 100
+    debug          = false
   }
 }
 
 output "result" {
   value = module.template.result
+  # {
+  #   app      = { name = "shop", environment = "prod", url = "https://shop.prod.example.com" }
+  #   database = { host = "shop-db.prod.internal", port = 5432, max_connections = 100 }
+  #   features = { debug = false }
+  #   tags     = ["shop", "prod"]
+  # }
 }

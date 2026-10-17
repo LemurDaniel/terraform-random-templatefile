@@ -5,32 +5,31 @@ run "json_example" {
   variables {
     file = "examples/json/file.json"
     parameters = {
-      insertion01 = "This is a test1"
-      insertion02 = "This is a test2"
-      insertion03 = "This is a test3"
+      appName        = "shop"
+      environment    = "prod"
+      maxConnections = 100
+      debug          = false
     }
   }
 
   # verify the json file is decoded and its tokens are substituted correctly.
   assert {
-    condition = output.result == {
-      default_parameters = {
-        location    = "westeurope"
-        environment = "development"
-        name        = "myapp"
+    condition = jsonencode(output.result) == jsonencode({
+      app = {
+        environment = "prod"
+        name        = "shop"
+        url         = "https://shop.prod.example.com"
       }
-      index_modifier = 1
-      enforce_lower_case = {
-        default = true
-        test    = "This is a test1"
+      database = {
+        host            = "shop-db.prod.internal"
+        max_connections = 100
+        port            = 5432
       }
-      patterns = {
-        default = "This is a test2"
-        AzureAD = {
-          default = "This is a test3"
-        }
+      features = {
+        debug = false
       }
-    }
-    error_message = "Decoded json result is invalid"
+      tags = ["shop", "prod"]
+    })
+    error_message = "got: ${jsonencode(output.result)}"
   }
 }

@@ -1,20 +1,20 @@
 # ------------------------------------------------------------------------------------------------
-# file.yaml — sample template rendered by examples/yaml and tests/yaml.tftest.hcl
+# file.yaml — app config template rendered by examples/yaml and tests/yaml.tftest.hcl
 # ------------------------------------------------------------------------------------------------
 
-default_parameters:
-  location: westeurope
-  environment: development
-  name: myapp
+app:
+  name: ${appName}
+  environment: ${environment}
+  url: https://${appName}.${environment}.example.com
 
-index_modifier: 1
+database:
+  host: ${appName}-db.${environment}.internal
+  port: 5432
+  max_connections: ${maxConnections}
 
-enforce_lower_case:
-  default: true
-  test: ${insertion01}
+features:
+  debug: ${debug}
 
-patterns:
-  default: ${insertion02}
-
-  AzureAD:
-    default: ${insertion03}
+tags:
+  - ${appName}
+  - ${environment}

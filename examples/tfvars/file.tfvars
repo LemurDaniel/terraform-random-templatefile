@@ -1,20 +1,17 @@
-default_parameters = {
-  location    = "westeurope"
-  environment = "development"
-  name        = "myapp"
+app = {
+  name        = "${appName}"
+  environment = "${environment}"
+  url         = "https://${appName}.${environment}.example.com"
 }
 
-index_modifier = 1
-
-enforce_lower_case = {
-  default = true
-  test    = "${insertion01}"
+database = {
+  host            = "${appName}-db.${environment}.internal"
+  port            = 5432
+  max_connections = "${maxConnections}"
 }
 
-patterns = {
-  default = "${insertion02}"
-
-  AzureAD = {
-    default = "${insertion03}"
-  }
+features = {
+  debug = "${debug}"
 }
+
+tags = ["${appName}", "${environment}"]
