@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------------------------
-# test.yaml — sample test data for local testing via locals.template.tf (yamldecode(file(var.file)))
+# file.yaml — sample template rendered by examples/yaml and tests/yaml.tftest.hcl
 # ------------------------------------------------------------------------------------------------
 
 default_parameters:

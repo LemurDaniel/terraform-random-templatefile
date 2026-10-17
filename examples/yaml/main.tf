@@ -1,9 +1,5 @@
-
 # ----------------------------------------------------------------------------
-# Example: basic resource naming with an index range.
-#
-# Declare the schema once, then generate a full set of sequentially
-# named resources in a single naming-generator call.
+# Example: render file.yaml with ${...} substitution and decode it.
 # ----------------------------------------------------------------------------
 
 module "template" {
@@ -18,5 +14,5 @@ module "template" {
 }
 
 output "result" {
-  value = module.template
+  value = module.template.result
 }
