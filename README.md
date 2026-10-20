@@ -1,3 +1,5 @@
+> [!NOTE]
+> **AI disclaimer:** Originally written by hand, then improved with the help of AI. The module is covered by `terraform test`, and the examples are the same files the tests run against. 🤖
 
 # Terraform Random Template Module
 
